@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Attack Site</title>
+</head>
+<body>
+<h1>Attack Site</h1>
+
+<p>1. img src로 GET 요청</p>
+<!--<img src="http://localhost:8080/get-csrf" alt="test image">-->
+<img src="https://b426-220-121-112-76.ngrok-free.app/get-csrf" alt="test image">
+
+<hr>
+
+<p>2. 링크 클릭으로 top-level GET 요청</p>
+<!--<a href="http://localhost:8080/get-csrf">protected-get 링크 클릭</a>-->
+<a href="https://b426-220-121-112-76.ngrok-free.app/get-csrf">protected-get 링크 클릭</a>
+
+<hr>
+
+<p>3. form POST 요청</p>
+<!--<form action="http://localhost:8080/post-csrf" method="POST">-->
+<form action="https://b426-220-121-112-76.ngrok-free.app/post-csrf" method="POST">
+    <button type="submit">protected-post POST 전송</button>
+</form>
+
+<!--<hr>-->
+
+<!--<p>4. Authorization 헤더 없이 header-protected 요청</p>-->
+<!--<a href="http://localhost:8080/header-protected">header-protected 링크 클릭</a>-->
+
+</body>
+</html>
