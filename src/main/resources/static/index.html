@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>CSRF / SameSite Test</title>
+</head>
+<body>
+<h1>Origin Site</h1>
+
+<button onclick="login()">로그인(쿠키 발급)</button>
+<button onclick="loginSameSiteNone()">로그인(쿠키 발급, SameSite=None)</button>
+<button onclick="loginSameSiteStrict()">로그인(쿠키 발급, SameSite=Strict)</button>
+<button onclick="logout()">로그아웃(쿠키 삭제)</button>
+
+<hr>
+
+<button onclick="callProtectedGet()">쿠키 인증 GET 호출</button>
+<button onclick="callProtectedPost()">쿠키 인증 POST 호출</button>
+
+<hr>
+
+<button onclick="callHeaderProtected()">Authorization 헤더 GET 호출</button>
+
+<hr>
+
+<pre id="result"></pre>
+
+<script>
+    const result = document.getElementById("result");
+
+    function print(text) {
+        result.textContent = text;
+        console.log(text);
+    }
+
+    async function login() {
+        const res = await fetch("/login", {
+            method: "POST",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function loginSameSiteNone() {
+        const res = await fetch("/login-same-site-none", {
+            method: "POST",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function loginSameSiteStrict() {
+        const res = await fetch("/login-same-site-strict", {
+            method: "POST",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function logout() {
+        const res = await fetch("/logout", {
+            method: "GET",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function callProtectedGet() {
+        const res = await fetch("/get-csrf", {
+            method: "GET",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function callProtectedPost() {
+        const res = await fetch("/post-csrf", {
+            method: "POST",
+            credentials: "include"
+        });
+        print(await res.text());
+    }
+
+    async function callHeaderProtected() {
+        const res = await fetch("/header-protected", {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer test-token"
+            }
+        });
+        print(await res.text());
+    }
+</script>
+</body>
+</html>
